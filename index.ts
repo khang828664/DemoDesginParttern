@@ -5,6 +5,7 @@ import { WOODEN_GOODS, STEEL_GOODS, HOUSE_1, HOUSE_2 } from "./const"
 import { Director, house_1, house_2 } from './builder'
 import { Target, Adapter, service } from "./adapter"
 import { PrototypeRes, Trooper, TrooperPrototype, CommandoTrooper } from './prototype'
+import { Dot, Circle, CompoundGraphic, Graphic } from './composite'
 ///Abstact factory 
 // const rl = readline.createInterface({
 //     input: process.stdin,
@@ -77,6 +78,23 @@ console.log(cloneTrooper.getInfo())
 
 ///
 ///
+// composite
+const graphic = new CompoundGraphic()
+graphic.add(new Dot(1, 2))
+graphic.add(new Circle(5, 3, 10))
+graphic.draw()
+graphic.move(10, 10)
+console.log("After move: ")
+graphic.draw()
+const groupSelect = (component: Graphic[]) => {
+    let group = new CompoundGraphic()
+    for (let items of component) {
+        group.add(items)
+        graphic.remove(items)
+    }
+    graphic.add(group)
+    graphic.draw()
+}
 
 
 
