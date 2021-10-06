@@ -57,6 +57,7 @@ class house_2 implements BuilderHouse {
     }
     getResult = (): string => this.result
 }
+/// director 
 class Director {
     builder: BuilderHouse
     setBUilder = (param: BuilderHouse) => { this.builder = param }
@@ -66,14 +67,14 @@ class Director {
 
         if (parma == 1) {
             /// Build house 1
-            this.builder.buildBody("woodenBody")
-            this.builder.buildDoor("woodenDoor")
-            this.builder.buildRoof("woodenRoof")
+            this.builder.buildBody("woodenBody\n")
+            this.builder.buildDoor("woodenDoor\n")
+            this.builder.buildRoof("woodenRoof\n")
         }
         if (parma == 2) {
             // build house 2 
-            this.builder.buildBody("steelBody")
-            this.builder.buildDoor("steelDoor")
+            this.builder.buildBody("steelBody\n")
+            this.builder.buildDoor("steelDoor\n")
         }
     }
 }
