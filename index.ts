@@ -6,6 +6,9 @@ import { Director, house_1, house_2 } from './builder'
 import { Target, Adapter, service } from "./adapter"
 import { PrototypeRes, Trooper, TrooperPrototype, CommandoTrooper } from './prototype'
 import { Dot, Circle, CompoundGraphic, Graphic } from './composite'
+import {TV, Radio, Remote, specialRemote}from './bridge'
+import {CheeseDecorator, IPizza, TomatoPizza, ChickenPizza , PizzaDecorator, PepperDecorator} from './decorator'
+import {VideoConverter, MPEG4CompressionCodec, OggCompressionCodec, AudioMixer, VideoFile} from './facade';
 ///Abstact factory 
 // const rl = readline.createInterface({
 //     input: process.stdin,
@@ -79,23 +82,60 @@ console.log(cloneTrooper.getInfo())
 ///
 ///
 // composite
-const graphic = new CompoundGraphic()
-graphic.add(new Dot(1, 2))
-graphic.add(new Circle(5, 3, 10))
-graphic.draw()
-graphic.move(10, 10)
-console.log("After move: ")
-graphic.draw()
-const groupSelect = (component: Graphic[]) => {
-    let group = new CompoundGraphic()
-    for (let items of component) {
-        group.add(items)
-        graphic.remove(items)
-    }
-    graphic.add(group)
-    graphic.draw()
-}
-
+// const graphic = new CompoundGraphic()
+// graphic.add(new Dot(1, 2))
+// graphic.add(new Circle(5, 3, 10))
+// graphic.draw()
+// graphic.move(10, 10)
+// console.log("After move: ")
+// graphic.draw()
+// const groupSelect = (component: Graphic[]) => {
+//     let group = new CompoundGraphic()
+//     for (let items of component) {
+//         group.add(items)
+//         graphic.remove(items)
+//     }
+//     graphic.add(group)
+//     graphic.draw()
+// }
+////// bridge ////
+const tv  = new TV();
+const radio  = new Radio();
+tv.getInfo();
+const remote =  new Remote(tv);
+const remoteRadio = new Remote(radio);
+remoteRadio.volumeDown();
+remoteRadio.togglePower();
+remote.togglePower();
+remote.volumeDown();
+tv.getInfo();
+remote.togglePower();
+remote.volumeDown();
+tv.getInfo();
+/// decorate ///
+const Tomato : IPizza =  new  TomatoPizza();
+const Chicken : IPizza = new ChickenPizza();
+// default pizza 
+console.log(Tomato.doPizza());
+console.log(Chicken.doPizza());
+///---
+const cheeseDecorator:CheeseDecorator = new CheeseDecorator(Tomato);
+const cheeseDecorator_1 = cheeseDecorator.setPizza(Chicken);
+console.log(cheeseDecorator.doPizza());
+const pepperDecorator:PepperDecorator = new PepperDecorator(Tomato);
+console.log(pepperDecorator.doPizza());
+///flyWeight pattern////
+/// facade /////
+const videoFile = new VideoFile();
+const MP4 = new MPEG4CompressionCodec();
+const Ogg = new  OggCompressionCodec()
+const Audio = new AudioMixer();
+/**
+ * Wrap complex Operation to load 1 fine to 1 method 
+ * 
+ */
+const convert = new VideoConverter (videoFile, MP4, Ogg, Audio);
+convert.convert("funny_cat", "MP4","sound_track")
 
 
 
