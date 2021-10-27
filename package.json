@@ -4,6 +4,7 @@
         "dev": "nodemon index.ts"
     },
     "dependencies": {
+        "lodash": "^4.17.21",
         "node": "^16.9."
     },
     "devDependencies": {

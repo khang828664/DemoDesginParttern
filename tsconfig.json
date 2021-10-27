@@ -3,7 +3,7 @@
         "module": "commonjs",
         "removeComments": false,
         "lib": ["ES2016"],
-        "target": "ES6"
+        "target": "es2017"
     },
     "include": ["src/**/*","**/*", "src/powerGeneratorInterface.ts"],
     "exclude": ["node_modules", "**/*.spec.ts"]

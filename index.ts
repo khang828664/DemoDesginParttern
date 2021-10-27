@@ -6,9 +6,14 @@ import { Director, house_1, house_2 } from './builder'
 import { Target, Adapter, service } from "./adapter"
 import { PrototypeRes, Trooper, TrooperPrototype, CommandoTrooper } from './prototype'
 import { Dot, Circle, CompoundGraphic, Graphic } from './composite'
-import {TV, Radio, Remote, specialRemote}from './bridge'
-import {CheeseDecorator, IPizza, TomatoPizza, ChickenPizza , PizzaDecorator, PepperDecorator} from './decorator'
-import {VideoConverter, MPEG4CompressionCodec, OggCompressionCodec, AudioMixer, VideoFile} from './facade';
+import { TV, Radio, Remote, specialRemote } from './bridge'
+import { CheeseDecorator, IPizza, TomatoPizza, ChickenPizza, PizzaDecorator, PepperDecorator } from './decorator'
+import { VideoConverter, MPEG4CompressionCodec, OggCompressionCodec, AudioMixer, VideoFile } from './facade';
+import { TankFactory, Tank, type, size, tankSkill, TankSkill, ITank } from './flyweight';
+import {PlayingState, ReadyState ,Player, LockedState} from './state';
+import {Context,ConcreteStrategyA, ConcreteStrategyB}from'./strategy'
+import { randomInt } from 'crypto';
+import *as lodash from 'lodash'
 ///Abstact factory 
 // const rl = readline.createInterface({
 //     input: process.stdin,
@@ -54,30 +59,30 @@ import {VideoConverter, MPEG4CompressionCodec, OggCompressionCodec, AudioMixer, 
 // prototype client
 /// 
 /// create old 
-const prototypeRes = new PrototypeRes()
-const trooper: TrooperPrototype = new Trooper()
-trooper.id = "0"
-trooper.rank = "1"
-trooper.color = "#ffff"
-let cloneObject = Object.create(trooper)
-cloneObject.rank = "red"
-console.log(cloneObject.rank)
-console.log(trooper.getInfo())
-/// res prototype
-prototypeRes.addItem(trooper)
-const commandoTrooper: TrooperPrototype = new CommandoTrooper()
-commandoTrooper.id = "1"
-commandoTrooper.rank = "2"
-commandoTrooper.color = "#FF0000"
-prototypeRes.addItem(commandoTrooper)
-///
-/// clone object trooper by color 
-const cloneTrooper: TrooperPrototype = prototypeRes.getByColor("#ffff")
-/// clone  object commandoTrooper by color
-const cloneCommandoTrooper: TrooperPrototype = prototypeRes.getByColor("#FF0000")
+// const prototypeRes = new PrototypeRes()
+// const trooper: TrooperPrototype = new Trooper()
+// trooper.id = "0"
+// trooper.rank = "1"
+// trooper.color = "#ffff"
+// let cloneObject = Object.create(trooper)
+// cloneObject.rank = "red"
+// console.log(cloneObject.rank)
+// console.log(trooper.getInfo())
+// /// res prototype
+// prototypeRes.addItem(trooper)
+// const commandoTrooper: TrooperPrototype = new CommandoTrooper()
+// commandoTrooper.id = "1"
+// commandoTrooper.rank = "2"
+// commandoTrooper.color = "#FF0000"
+// prototypeRes.addItem(commandoTrooper)
+// ///
+// /// clone object trooper by color 
+// const cloneTrooper: TrooperPrototype = prototypeRes.getByColor("#ffff")
+// /// clone  object commandoTrooper by color
+// const cloneCommandoTrooper: TrooperPrototype = prototypeRes.getByColor("#FF0000")
 
-console.log(cloneCommandoTrooper.getInfo())
-console.log(cloneTrooper.getInfo())
+// console.log(cloneCommandoTrooper.getInfo())
+// console.log(cloneTrooper.getInfo())
 
 ///
 ///
@@ -99,45 +104,123 @@ console.log(cloneTrooper.getInfo())
 //     graphic.draw()
 // }
 ////// bridge ////
-const tv  = new TV();
-const radio  = new Radio();
-tv.getInfo();
-const remote =  new Remote(tv);
-const remoteRadio = new Remote(radio);
-remoteRadio.volumeDown();
-remoteRadio.togglePower();
-remote.togglePower();
-remote.volumeDown();
-tv.getInfo();
-remote.togglePower();
-remote.volumeDown();
-tv.getInfo();
+// const tv = new TV();
+// const radio = new Radio();
+// tv.getInfo();
+// const remote = new Remote(tv);
+// const remoteRadio = new Remote(radio);
+// remoteRadio.volumeDown();
+// remoteRadio.togglePower();
+// remote.togglePower();
+// remote.volumeDown();
+// tv.getInfo();
+// remote.togglePower();
+// remote.volumeDown();
+// tv.getInfo();
 /// decorate ///
-const Tomato : IPizza =  new  TomatoPizza();
-const Chicken : IPizza = new ChickenPizza();
+const Tomato: IPizza = new TomatoPizza();
+const Chicken: IPizza = new ChickenPizza();
 // default pizza 
-console.log(Tomato.doPizza());
-console.log(Chicken.doPizza());
+// console.log(Tomato.doPizza());
+// console.log(Chicken.doPizza());
 ///---
-const cheeseDecorator:CheeseDecorator = new CheeseDecorator(Tomato);
-const cheeseDecorator_1 = cheeseDecorator.setPizza(Chicken);
-console.log(cheeseDecorator.doPizza());
-const pepperDecorator:PepperDecorator = new PepperDecorator(Tomato);
-console.log(pepperDecorator.doPizza());
-///flyWeight pattern////
+// const cheeseDecorator: CheeseDecorator = new CheeseDecorator(Tomato);
+// const cheeseDecorator_1 = cheeseDecorator.setPizza(Chicken);
+// console.log(cheeseDecorator.doPizza());
+// const pepperDecorator: PepperDecorator = new PepperDecorator(Tomato);
+// console.log(pepperDecorator.doPizza());
+///flyWeight pattern////   
+//List tank
+// const tanks: ITank[] = []
+// const createTank = (numberOfTank, { ...props }) => {
+//     for (let index = 0; index < numberOfTank; index++) {
+//         let skillTank: TankSkill
+//         if (randomInt(1) == 1) {
+//             skillTank = new TankSkill(tankSkill.BREAK_AMOR)
+//         } else {
+//             skillTank = new TankSkill(tankSkill.EXPLORE_BULLET)
+//         }
+//         let tank = TankFactory.createTank(props.type, props)
+//         tank.readState(skillTank)
+//         tanks.push(tank)
+//     }
+// }
+// const mediumTank = {
+//     color: "#0010",
+//     texture: "random",
+//     type: type.MEDIUM,
+//     size: size.MEDIUM,
+//     name: "Tiger II"
+// }
+// const lightTank = {
+//     color: "#0010",
+//     texture: "random",
+//     type: type.LIGHT,
+//     size: size.SMALL,
+//     name: "leopard"
+// }
+// const HeavyTank = {
+//     color: "#0010",
+//     texture: "random",
+//     type: type.HEAVY,
+//     size: size.BIG,
+//     name: "Maus"
+// }
+// console.time("createTank")
+// createTank(3, mediumTank)
+// createTank(5, lightTank)
+// createTank(8, HeavyTank)
+// ////with out pattern
+
+// TankFactory.countNumberOfTankCreate()
+// console.timeEnd("createTank")
+// console.log(`Number Object Tank create ${TankFactory.numberOfTypeCreate}`)
+
+
+
+// console.time("createMTank")
+// const createMTank = () => {
+//     let arrayTank: ITank[] = []
+//     for (let index = 0; index < 20; index++) {
+//         arrayTank[index] = new Tank(lightTank)
+//         arrayTank[index].readState(null)
+//     }
+// }
+// console.timeEnd("createMTank")
 /// facade /////
-const videoFile = new VideoFile();
-const MP4 = new MPEG4CompressionCodec();
-const Ogg = new  OggCompressionCodec()
-const Audio = new AudioMixer();
+// const videoFile = new VideoFile();
+// const MP4 = new MPEG4CompressionCodec();
+// const Ogg = new OggCompressionCodec()
+// const Audio = new AudioMixer();
+// /**
+//  * Wrap complex Operation to load 1 fine to 1 method 
+//  * 
+//  */
+// const convert = new VideoConverter(videoFile, MP4, Ogg, Audio);
+// convert.convert("funny_cat", "MP4", "sound_track")
 /**
- * Wrap complex Operation to load 1 fine to 1 method 
- * 
+ * State 
  */
-const convert = new VideoConverter (videoFile, MP4, Ogg, Audio);
-convert.convert("funny_cat", "MP4","sound_track")
-
-
+// const initialState  = new  ReadyState()
+// const mediaPlayer = new Player(initialState)
+// mediaPlayer.clickPlay()
+/**
+ * state
+ */
+/**
+ * strategy 
+ */
+const number:number[] = [1,3,2,4,7,6,5]
+const context = new Context(new ConcreteStrategyA())
+console.log('Client: Strategy is set to normal sorting.');
+context.doSomeBusinessLogic(number);
+console.log('');
+console.log('Client: Strategy is set to reverse sorting.');
+context.setStrategy(new ConcreteStrategyB())
+context.doSomeBusinessLogic(number)
+/**
+ * strategy 
+ */
 
 
 
