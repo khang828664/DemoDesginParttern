@@ -10,10 +10,12 @@ import { TV, Radio, Remote, specialRemote } from './bridge'
 import { CheeseDecorator, IPizza, TomatoPizza, ChickenPizza, PizzaDecorator, PepperDecorator } from './decorator'
 import { VideoConverter, MPEG4CompressionCodec, OggCompressionCodec, AudioMixer, VideoFile } from './facade';
 import { TankFactory, Tank, type, size, tankSkill, TankSkill, ITank } from './flyweight';
-import {PlayingState, ReadyState ,Player, LockedState} from './state';
-import {Context,ConcreteStrategyA, ConcreteStrategyB}from'./strategy'
+import { PlayingState, ReadyState, Player, LockedState } from './state';
+import { Context, ConcreteStrategyA, ConcreteStrategyB } from './strategy'
 import { randomInt } from 'crypto';
 import *as lodash from 'lodash'
+import { CProxy, Service } from './proxy';
+import { AbstractClass, ConcreteClass_1, ConcreteClass_2  } from './template'
 ///Abstact factory 
 // const rl = readline.createInterface({
 //     input: process.stdin,
@@ -210,7 +212,7 @@ const Chicken: IPizza = new ChickenPizza();
 /**
  * strategy 
  */
-const number:number[] = [1,3,2,4,7,6,5]
+const number: number[] = [1, 3, 2, 4, 7, 6, 5]
 const context = new Context(new ConcreteStrategyA())
 console.log('Client: Strategy is set to normal sorting.');
 context.doSomeBusinessLogic(number);
@@ -221,7 +223,39 @@ context.doSomeBusinessLogic(number)
 /**
  * strategy 
  */
+/**
+ * Proxy
+ */
+// const clientUsing = new CProxy(new Service())
+// clientUsing.checkAccess(true);
+// clientUsing.operation();
+// clientUsing.operation_1();
+// clientUsing.operation_3();
+// /// set deny for service 
+// clientUsing.checkAccess(false);
+// try {
+//     clientUsing.operation_2();
+// } catch (e) {
+//     console.log(e.toString());
+// }
+/**
+ * Proxy
+ */
+/**
+ * template
+ */
+const concrete_1: AbstractClass = new ConcreteClass_1()
+const concrete_2: AbstractClass = new ConcreteClass_2()
 
+console.log("<----Template Method---->")
+console.log("<----Concrete 1:----> ")
+concrete_1.templateMethod()
+console.log("<----Concrete 2:----> ")
+concrete_2.templateMethod()
+console.log("<----Template Method---->")
+/**
+ * template
+ */
 
 
 
