@@ -5,7 +5,7 @@ import { WOODEN_GOODS, STEEL_GOODS, HOUSE_1, HOUSE_2 } from "./const"
 import { Director, house_1, house_2 } from './builder'
 import { Target, Adapter, service } from "./adapter"
 import { PrototypeRes, Trooper, TrooperPrototype, CommandoTrooper } from './prototype'
-import { Dot, Circle, CompoundGraphic, Graphic } from './composite'
+//import { Dot, Circle, CompoundGraphic, Graphic } from './composite'
 import { TV, Radio, Remote, specialRemote } from './bridge'
 import { CheeseDecorator, IPizza, TomatoPizza, ChickenPizza, PizzaDecorator, PepperDecorator } from './decorator'
 import { VideoConverter, MPEG4CompressionCodec, OggCompressionCodec, AudioMixer, VideoFile } from './facade';
@@ -16,6 +16,14 @@ import { randomInt } from 'crypto';
 import *as lodash from 'lodash'
 import { CProxy, Service } from './proxy';
 import { AbstractClass, ConcreteClass_1, ConcreteClass_2  } from './template'
+import {Command,Invoke, Receiver, ComplexCommand, SimpleCommand} from './command'
+import {Circle,Rectangle,Dot,XMLExportVisiter, HTMLexportVisiter } from './visitor'
+import {Component1, Component2 , ConcreteMediator }from './mediator'
+import {Originator, Caretaker} from './memento'
+import {WordsCollection} from './iterator'
+import { AddExpression, Expression, InterpretEngineContext, SubtractExpression } from './interpreter';
+import {SquirrelHandler, DogHandler , MonkeyHandler, Handler} from './chain'
+import {Subject, ConcreteObA, ConcreteObB, Observer,ConcreteSubject} from './observer'
 ///Abstact factory 
 // const rl = readline.createInterface({
 //     input: process.stdin,
@@ -120,8 +128,8 @@ import { AbstractClass, ConcreteClass_1, ConcreteClass_2  } from './template'
 // remote.volumeDown();
 // tv.getInfo();
 /// decorate ///
-const Tomato: IPizza = new TomatoPizza();
-const Chicken: IPizza = new ChickenPizza();
+// const Tomato: IPizza = new TomatoPizza();
+// const Chicken: IPizza = new ChickenPizza();
 // default pizza 
 // console.log(Tomato.doPizza());
 // console.log(Chicken.doPizza());
@@ -212,14 +220,14 @@ const Chicken: IPizza = new ChickenPizza();
 /**
  * strategy 
  */
-const number: number[] = [1, 3, 2, 4, 7, 6, 5]
-const context = new Context(new ConcreteStrategyA())
-console.log('Client: Strategy is set to normal sorting.');
-context.doSomeBusinessLogic(number);
-console.log('');
-console.log('Client: Strategy is set to reverse sorting.');
-context.setStrategy(new ConcreteStrategyB())
-context.doSomeBusinessLogic(number)
+// const number: number[] = [1, 3, 2, 4, 7, 6, 5]
+// const context = new Context(new ConcreteStrategyA())
+// console.log('Client: Strategy is set to normal sorting.');
+// context.doSomeBusinessLogic(number);
+// console.log('');
+// console.log('Client: Strategy is set to reverse sorting.');
+// context.setStrategy(new ConcreteStrategyB())
+// context.doSomeBusinessLogic(number)
 /**
  * strategy 
  */
@@ -244,18 +252,167 @@ context.doSomeBusinessLogic(number)
 /**
  * template
  */
-const concrete_1: AbstractClass = new ConcreteClass_1()
-const concrete_2: AbstractClass = new ConcreteClass_2()
 
-console.log("<----Template Method---->")
-console.log("<----Concrete 1:----> ")
-concrete_1.templateMethod()
-console.log("<----Concrete 2:----> ")
-concrete_2.templateMethod()
-console.log("<----Template Method---->")
+
 /**
  * template
  */
 
+/**
+ * Command
+ */
+    // const invoker = new Invoke();
+    // invoker.setOnStart(new SimpleCommand('Say hi'))
+    // const receiver = new Receiver ();
+    // invoker.setOnFinish(new ComplexCommand(receiver, 'send email', 'Save report'))
+    // invoker.doSomethingImportant();
+/**
+ * Command
+ */
+/**
+ * visitor
+ */
+    // const circle = new Circle({x:10,y:10,radius:10})
+    // const rectangle= new Rectangle({x:5,y:5,angle:10})  
+    // const dot = new  Dot ({x:10,y:10})
+    // const xmlVisitor = new XMLExportVisiter()
+    // const htmlVisitor = new  HTMLexportVisiter () 
+    //     dot.accept(xmlVisitor);
+    //     dot.accept(htmlVisitor);
+/**
+ * visitor
+ */
+/** 
+ * mediator
+ */
+// const c1  = new Component1()
+// const c2  = new Component2()
+// const mediator =  new ConcreteMediator(c1, c2)
 
+// console.log('client trigger operator A')
+// c1.doA()
+// console.log('')
+// console.log('client trigger operator D.')
+// c2.doD()
+/**
+ * mediator
+ */
+/**
+ * Memento
+//  */
+// const originator = new Originator('Super-duper-super-puper-super.')
+// const caretaker =  new Caretaker (originator)
+// caretaker.backup();
+// originator.doSomething();
 
+// caretaker.backup();
+// originator.doSomething();
+
+// caretaker.backup();
+// originator.doSomething();
+
+// console.log('');
+// caretaker.showHistory();
+
+// console.log('\nClient: Now, let\'s rollback!\n');
+// caretaker.undo();
+
+// console.log('\nClient: Once more!\n');
+// caretaker.undo();
+/**
+ * Memento
+ */
+/**
+ * Interpret
+ */
+
+//  const interpret =  (input:string)  => {
+//     let exp:Expression = null;
+//     if(input.includes("cong")){
+//         exp = new AddExpression(input)
+//     }else { 
+//         if (input.includes("tru"))
+//         exp =  new SubtractExpression(input)
+//         else  {
+//         throw new Error("unSupport");
+        
+//     }
+// }
+//     return exp.interpret(new InterpretEngineContext())
+// }  
+// console.log(`20 cong 8 = ${interpret("20 cong 8")}`)
+// console.log(`20 cong 8 = ${interpret("20 tru 8")}`)
+
+/**
+ * Interpret
+ */
+
+/**
+ * chain
+ */
+//  function clientCode(handler: Handler) {
+//     const foods = ['Nut', 'Banana', 'Cup of coffee'];
+
+//     for (const food of foods) {
+//         console.log(`Client: Who wants a ${food}?`);
+
+//         const result = handler.handle(food);
+//         if (result) {
+//             console.log(`  ${result}`);
+//         } else {
+//             console.log(`  ${food} was left untouched.`);
+//         }
+//     }
+// }
+
+//  const monkey = new MonkeyHandler();
+//  const squirrel = new SquirrelHandler();
+//  const dog = new DogHandler();
+ 
+//  monkey.setNext(squirrel).setNext(dog);
+ 
+//  console.log('Chain: Monkey > Squirrel > Dog\n');
+//  clientCode(monkey);
+//  console.log('');
+ 
+//  console.log('Subchain: Squirrel > Dog\n');
+//  clientCode(squirrel);
+/**
+ * chain
+ */
+/** Iterator */
+const collection = new WordsCollection();
+collection.addItem("First")
+collection.addItem("Second")
+collection.addItem("Third")
+collection.addItem("Four")
+
+const iterator= collection.getIterator();
+console.log(" Straight traversal")
+while (iterator.valid()) {
+    console.log(iterator.next());
+}
+console.log('');
+console.log('Reverse traversal');
+const reverseIterator = collection.getReverseIterator();
+while(reverseIterator.valid()) {
+    console.log(reverseIterator.next())
+}
+/**Iterator */
+/**
+ * Observer
+ */
+const subject = new ConcreteSubject ();
+const observer_1:Observer = new ConcreteObA ();
+subject.attach(observer_1)
+const observer_2:Observer = new ConcreteObB ();
+subject.attach(observer_2)
+
+subject.someBusinessLogic();
+subject.someBusinessLogic();
+subject.detach(observer_2);
+subject.someBusinessLogic()
+/**
+ * 
+ * Observer
+ */
