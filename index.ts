@@ -1,6 +1,7 @@
 import *as http from 'http';
 import *as readline from 'readline'
-import factory, { steelGoods, woodenGoods } from './factory';
+import Client, { Factory, Factory_1 } from './factory';
+import clientCode, { ConcreteCreator1, ConcreteCreator2 } from './factory_method'
 import { WOODEN_GOODS, STEEL_GOODS, HOUSE_1, HOUSE_2 } from "./const"
 import { Director, house_1, house_2 } from './builder'
 import { Target, Adapter, service } from "./adapter"
@@ -15,7 +16,7 @@ import { Context, ConcreteStrategyA, ConcreteStrategyB } from './strategy'
 import { randomInt } from 'crypto';
 import *as lodash from 'lodash'
 import { CProxy, Service } from './proxy';
-import { AbstractClass, ConcreteClass_1, ConcreteClass_2  } from './template'
+import ClientTemPlate, { AbstractClass, ConcreteClass_1, ConcreteClass_2  } from './template'
 import {Command,Invoke, Receiver, ComplexCommand, SimpleCommand} from './command'
 import {Circle,Rectangle,Dot,XMLExportVisiter, HTMLexportVisiter } from './visitor'
 import {Component1, Component2 , ConcreteMediator }from './mediator'
@@ -24,27 +25,29 @@ import {WordsCollection} from './iterator'
 import { AddExpression, Expression, InterpretEngineContext, SubtractExpression } from './interpreter';
 import {SquirrelHandler, DogHandler , MonkeyHandler, Handler} from './chain'
 import {Subject, ConcreteObA, ConcreteObB, Observer,ConcreteSubject} from './observer'
-///Abstact factory 
-// const rl = readline.createInterface({
-//     input: process.stdin,
-//     output: process.stdout
-// })
-// console.log("1:for steel Goods ")
-// console.log("2:for wood Goods ")
-// const productSteel: steelGoods = factory.createSteel()
-// const productWooden: woodenGoods = factory.createWooden()
+/**
+ * Abstract Factory
+ */
+console.log("Create Complex Product include kind product A B")
+Client(new Factory)
+console.log("Create Complex Product_1 include kind product A-1 B-1")
+Client(new Factory_1)
+/**
+ * Abstract Factory
+ */
 
-// rl.question("what kine of product u want", (ans) => {
-//     switch (ans) {
-//         case "1":
-//             productSteel.createGood()
-//             break;
-//         case "2":
-//             productWooden.createGood()
-//         default:
-//             break;
-//     }
-// })
+/**
+ * Factory method
+ */
+ console.log('App: Launched with the ConcreteCreator1.');
+ clientCode(new ConcreteCreator1());
+ console.log('');
+ 
+ console.log('App: Launched with the ConcreteCreator2.');
+ clientCode(new ConcreteCreator2());
+/**
+ * Factory method
+ */
 /// Builder
 /// return result house_1  after build
 // const builderHouse_1 = new house_1()
@@ -252,8 +255,10 @@ import {Subject, ConcreteObA, ConcreteObB, Observer,ConcreteSubject} from './obs
 /**
  * template
  */
-
-
+    console.log("<<<<<<<-----Do ConcreteClass class _1------>>>>>")
+    ClientTemPlate(new ConcreteClass_1)
+    console.log("<<<<<<<-----Do ConcreteClass class _2------>>>>>")
+    ClientTemPlate(new ConcreteClass_2)
 /**
  * template
  */
@@ -381,37 +386,37 @@ import {Subject, ConcreteObA, ConcreteObB, Observer,ConcreteSubject} from './obs
  * chain
  */
 /** Iterator */
-const collection = new WordsCollection();
-collection.addItem("First")
-collection.addItem("Second")
-collection.addItem("Third")
-collection.addItem("Four")
+// const collection = new WordsCollection();
+// collection.addItem("First")
+// collection.addItem("Second")
+// collection.addItem("Third")
+// collection.addItem("Four")
 
-const iterator= collection.getIterator();
-console.log(" Straight traversal")
-while (iterator.valid()) {
-    console.log(iterator.next());
-}
-console.log('');
-console.log('Reverse traversal');
-const reverseIterator = collection.getReverseIterator();
-while(reverseIterator.valid()) {
-    console.log(reverseIterator.next())
-}
+// const iterator= collection.getIterator();
+// console.log(" Straight traversal")
+// while (iterator.valid()) {
+//     console.log(iterator.next());
+// }
+// console.log('');
+// console.log('Reverse traversal');
+// const reverseIterator = collection.getReverseIterator();
+// while(reverseIterator.valid()) {
+//     console.log(reverseIterator.next())
+// }
 /**Iterator */
 /**
  * Observer
  */
-const subject = new ConcreteSubject ();
-const observer_1:Observer = new ConcreteObA ();
-subject.attach(observer_1)
-const observer_2:Observer = new ConcreteObB ();
-subject.attach(observer_2)
+// const subject = new ConcreteSubject ();
+// const observer_1:Observer = new ConcreteObA ();
+// subject.attach(observer_1)
+// const observer_2:Observer = new ConcreteObB ();
+// subject.attach(observer_2)
 
-subject.someBusinessLogic();
-subject.someBusinessLogic();
-subject.detach(observer_2);
-subject.someBusinessLogic()
+// subject.someBusinessLogic();
+// subject.someBusinessLogic();
+// subject.detach(observer_2);
+// subject.someBusinessLogic()
 /**
  * 
  * Observer

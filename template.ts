@@ -1,6 +1,7 @@
 export abstract class AbstractClass {
     public templateMethod() : void
     {
+        console.log("Template method 2")
         this.baseOperation1();
         this.baseOperation2();
         this.requireOperation1();
@@ -10,7 +11,11 @@ export abstract class AbstractClass {
     }
     public templateMethod_2(): void 
     {
-
+        console.log("Template method 2")
+        this.baseOperation2()
+        this.requireOperation2()
+        this.hook_1()
+        
     }
 protected  baseOperation1():void {
     console.log("baseOperation1 doing_1")
@@ -47,4 +52,8 @@ export class ConcreteClass_2 extends AbstractClass {
         console.log("Concrete class 2 doing hook 1 ")
     }
 }
+export default function Client (f:AbstractClass) {
+    f.templateMethod()
+    f.templateMethod_2()
+} 
 
