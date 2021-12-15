@@ -1,5 +1,6 @@
 import *as http from 'http';
 import *as readline from 'readline'
+import ClientCodeSingleton from './singleton'
 import Client, { Factory, Factory_1 } from './factory';
 import clientCode, { ConcreteCreator1, ConcreteCreator2 } from './factory_method'
 import { WOODEN_GOODS, STEEL_GOODS, HOUSE_1, HOUSE_2 } from "./const"
@@ -25,6 +26,14 @@ import {WordsCollection} from './iterator'
 import { AddExpression, Expression, InterpretEngineContext, SubtractExpression } from './interpreter';
 import {SquirrelHandler, DogHandler , MonkeyHandler, Handler} from './chain'
 import {Subject, ConcreteObA, ConcreteObB, Observer,ConcreteSubject} from './observer'
+
+/**
+ * Singleton
+ */
+ClientCodeSingleton()
+/**
+ * Singleton
+ */
 /**
  * Abstract Factory
  */
