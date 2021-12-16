@@ -19,9 +19,9 @@ export class OggCompressionCodec {
     FileOgg() {
         return 'read file Ogg';
     }
-    /**
-     * SubClass 3
-     */
+/**
+* SubClass 3
+*/
 }
 export class MPEG4CompressionCodec {
     constructor() {
